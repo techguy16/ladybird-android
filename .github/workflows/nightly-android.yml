@@ -21,6 +21,7 @@ concurrency:
 jobs:
   CI:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
@@ -69,7 +70,7 @@ jobs:
 
       - name: Build and Test
         working-directory: ${{ github.workspace }}/Ladybird/Android
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --no-daemon
         env:
           GRADLE_OPTS: '-Xmx3072m'
           SERENITY_CACHE_DIR: ${{ github.workspace }}/Build/caches
