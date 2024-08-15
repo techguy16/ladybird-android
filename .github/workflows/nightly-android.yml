@@ -29,6 +29,14 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Up Environment
+        uses: ./.github/actions/setup
+        with:
+          os: ${{ matrix.os_name }}
+          arch: 'Lagom'
+      
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
@@ -39,14 +47,6 @@ jobs:
           remove-codeql: 'true'
           remove-haskell: 'true'
           
-      - uses: actions/checkout@v4
-
-      - name: Set Up Environment
-        uses: ./.github/actions/setup
-        with:
-          os: ${{ matrix.os_name }}
-          arch: 'Lagom'
-
       - name: Set Up Java
         uses: actions/setup-java@v4
         with:
