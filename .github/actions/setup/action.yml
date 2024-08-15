@@ -28,7 +28,11 @@ runs:
         sudo apt-get install autoconf autoconf-archive automake build-essential ccache clang-18 clang++-18 cmake curl fonts-liberation2 \
             gcc-13 g++-13 libavcodec-dev libegl1-mesa-dev libgl1-mesa-dev libpulse-dev libssl-dev libstdc++-13-dev lld-18 nasm ninja-build \
             qt6-base-dev qt6-tools-dev-tools tar unzip zip
-
+        
+        sudo wget -qO /usr/local/bin/ninja.gz https://github.com/ninja-build/ninja/releases/latest/download/ninja-linux.zip
+        sudo gunzip /usr/local/bin/ninja.gz
+        sudo chmod a+x /usr/local/bin/ninja
+        
         sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100
         sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
