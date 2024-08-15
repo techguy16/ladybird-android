@@ -7,11 +7,9 @@ on:
   workflow_dispatch:
 
 env:
-  # runner.workspace = /home/runner/work/serenity
-  # github.workspace = /home/runner/work/serenity/serenity
   LADYBIRD_SOURCE_DIR: ${{ github.workspace }}
   CCACHE_DIR: ${{ github.workspace }}/.ccache
-  VCPKG_ROOT:  ${{ github.workspace }}/Toolchain/Tarballs/vcpkg
+  VCPKG_ROOT: ${{ github.workspace }}/Toolchain/Tarballs/vcpkg
   VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
 
 concurrency:
@@ -29,15 +27,15 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-       - name: Maximize build space
-         uses: easimon/maximize-build-space@master
-         with:
-           root-reserve-mb: 512
-           swap-size-mb: 1024
-           remove-dotnet: 'true'
-           remove-docker-images: 'true'
-           remove-codeql: 'true'
-           remove-haskell: 'true'
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-docker-images: 'true'
+          remove-codeql: 'true'
+          remove-haskell: 'true'
           
       - uses: actions/checkout@v4
 
@@ -69,8 +67,8 @@ jobs:
       - name: Assign Build Parameters
         id: 'build-parameters'
         run: |
-          echo "host_cc=$(xcrun --find clang)" >> "$GITHUB_OUTPUT"
-          echo "host_cxx=$(xcrun --find clang++)" >> "$GITHUB_OUTPUT"
+          echo "host_cc=$(which clang)" >> "$GITHUB_ENV"
+          echo "host_cxx=$(which clang++)" >> "$GITHUB_ENV"
 
       - name: Install NDK
         run: |
