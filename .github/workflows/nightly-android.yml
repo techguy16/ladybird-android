@@ -28,11 +28,11 @@ jobs:
 
     steps:
       - name: Maximize build space
-        uses: gmij/max-build-space@main
+        uses: jlumbroso/free-disk-space@main
         with:
-          remove-dotnet: 'true'
-          remove-codeql: 'true'
-          remove-haskell: 'true'
+          dotnet: true
+          haskell: true
+          swap-storage: true
           
       - uses: actions/checkout@v4
 
