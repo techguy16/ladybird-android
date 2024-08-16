@@ -18,13 +18,10 @@ concurrency:
 
 jobs:
   CI:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
       fail-fast: false
-      matrix:
-        os_name: ['Android']
-        os: [ubuntu-latest]
 
     steps:
       - name: Maximize build space
@@ -35,13 +32,32 @@ jobs:
           dotnet: true
           haskell: true
           swap-storage: true
-          
+
+      - name: Clean more space
+        run: |
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /opt/ghc
+          sudo apt clean
+          sudo apt autoremove
+          sudo rm -rf \
+            /opt/google/chrome \
+            /opt/microsoft/msedge \
+            /opt/microsoft/powershell \
+            /opt/pipx \
+            /usr/lib/mono \
+            /usr/local/julia* \
+            /usr/local/lib/node_modules \
+            /usr/local/share/chromium \
+            /usr/local/share/powershell \
+            /usr/share/dotnet
+
       - uses: actions/checkout@v4
 
       - name: Set Up Environment
         uses: ./.github/actions/setup
         with:
-          os: ${{ matrix.os_name }}
+          os: 'Android'
           arch: 'Lagom'
       
       - name: Set Up Java
@@ -57,7 +73,7 @@ jobs:
         uses: ./.github/actions/cache-restore
         id: 'cache-restore'
         with:
-          os: ${{ matrix.os_name }}
+          os: 'Android'
           arch: 'Lagom'
           cache_key_extra: 'Nightly Android'
           serenity_ccache_path: ${{ env.CCACHE_DIR }}
